@@ -6,7 +6,5 @@ defmodule ClothingDashboardWeb.PageHTML do
   """
   use ClothingDashboardWeb, :html
 
-  import ClothingDashboardWeb.ProductComponent
-
   embed_templates "page_html/*"
 end
