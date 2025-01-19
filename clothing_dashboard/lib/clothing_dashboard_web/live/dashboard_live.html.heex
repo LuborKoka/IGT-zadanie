@@ -1,5 +1,20 @@
 <main class="container mx-auto">
   <h1 class="text-2xl font-bold mb-4">Products</h1>
+
+  <section class="mb-4">
+    Filter:
+
+    <%= for cat <- @categories do %>
+      <span 
+        phx-click="toggle_category" 
+        phx-value-category={cat}
+        class="ml-4 text-blue-600 cursor-pointer border-2 rounded px-2 py-1"
+      >
+        <%= cat %>
+      </span>
+    <% end %>
+    <a href="/" class="ml-4 text-red-600 border-2 rounded px-2 py-1">Clear filter</a>
+  </section>
   
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <%= for product <- @products do %>
@@ -18,3 +33,24 @@
     </a>
   </button>
 </main>
+
+
+
+<script>
+  let selectedCategories = new Set()
+
+  function toggleClasses(element, category) {
+    element.classList.toggle('text-blue-600')
+    element.classList.toggle('bg-blue-600')
+    element.classList.toggle('text-white')
+    element.classList.toggle('border-blue-600')
+    
+    if (selectedCategories.has(category)) {
+      selectedCategories.delete(category)
+    } else {
+      selectedCategories.add(category)
+    }
+
+    this.pushEvent("filter-categories", { categories: Array.from(selectedCategories) })
+  }
+</script>

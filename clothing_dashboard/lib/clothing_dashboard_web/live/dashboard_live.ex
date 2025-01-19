@@ -3,16 +3,27 @@ defmodule ClothingDashboardWeb.DashboardLive do
     alias ClothingDashboard.ProductService
     import ClothingDashboardWeb.ProductComponent
   
-    def mount(_params, _session, socket) do
+    def mount(params, _session, socket) do
+        products = case params["category"] do
+            nil -> ProductService.get_all_products()
+            category -> ProductService.get_products_by_category(category)
+        end
+
         socket = socket
-          |> assign(:products, ProductService.get_all_products())
+          |> assign(:products, products)
+          |> assign(:categories, ProductService.get_distinct_categories())
           |> assign(:editing, %{})
         {:ok, socket, layout: false}
-      end
+    end
+    
 
-      def handle_event("toggle_edit", %{"field" => field, "id" => id}, socket) do
+    def handle_event("toggle_category", %{"category" => category}, socket) do
+        {:noreply, push_navigate(socket, to: ~p"/?category=#{category}")}
+    end
+
+    def handle_event("toggle_edit", %{"field" => field, "id" => id}, socket) do
         editing = Map.get(socket.assigns, :editing, %{})
-        key = {String.to_integer(id), field}  # Create tuple key with ID and field
+        key = {String.to_integer(id), field} 
         
         editing = if Map.get(editing, key) do
             Map.delete(editing, key)
@@ -45,16 +56,16 @@ defmodule ClothingDashboardWeb.DashboardLive do
             IO.inspect(changeset, label: "Error changeset")
             {:noreply, put_flash(socket, :error, "Failed to update product")}
         end
-      end
+    end
   
     def handle_event("delete_product", %{"id" => id}, socket) do
-      case ProductService.delete_product(id) do
-        {:ok, _product} ->
-          products = socket.assigns.products |> Enum.reject(&(&1.id == String.to_integer(id)))
-          {:noreply, assign(socket, products: products)}
-  
-        {:error, _reason} ->
-          {:noreply, put_flash(socket, :error, "Failed to delete product")}
-      end
+        case ProductService.delete_product(id) do
+            {:ok, _product} ->
+            products = socket.assigns.products |> Enum.reject(&(&1.id == String.to_integer(id)))
+            {:noreply, assign(socket, products: products)}
+    
+            {:error, _reason} ->
+            {:noreply, put_flash(socket, :error, "Failed to delete product")}
+        end
     end
-  end
+end

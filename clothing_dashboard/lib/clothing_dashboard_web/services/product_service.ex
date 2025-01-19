@@ -12,6 +12,12 @@ defmodule ClothingDashboard.ProductService do
         Repo.get(Product, id)
     end
 
+    def get_products_by_category(category) do
+        from(p in Product, where: p.category == ^category)
+        |> Repo.all()
+    end
+
+
     def create_product(attrs) do
         %Product{}
         |> Product.changeset(attrs)
