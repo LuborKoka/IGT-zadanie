@@ -2,7 +2,6 @@ defmodule ClothingDashboardWeb.DashboardLive do
     use ClothingDashboardWeb, :live_view
     alias ClothingDashboard.ProductService
     import ClothingDashboardWeb.ProductComponent
-    require Logger
   
     def mount(_params, _session, socket) do
         socket = socket
@@ -25,9 +24,6 @@ defmodule ClothingDashboardWeb.DashboardLive do
     end
 
     def handle_event("update_product", params, socket) do
-        Logger.info("string")
-        Logger.debug("debuf")
-      
         %{"id" => id, "field" => field, "value" => value} = params
       
         parsed_value = case field do
