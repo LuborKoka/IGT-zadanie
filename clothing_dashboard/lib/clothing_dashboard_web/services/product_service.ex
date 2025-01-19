@@ -43,5 +43,24 @@ defmodule ClothingDashboard.ProductService do
       product -> Repo.delete(product)
     end
   end
+
+  @doc """
+  Updates a product's cost or stock.
+  
+  ## Examples
+      iex> update_product(1, %{cost: 29.99})
+      {:ok, %Product{}}
+      
+      iex> update_product(1, %{stock: 100})
+      {:ok, %Product{}}
+  """
+  def update_product(id, attrs) do
+    Product
+    |> Repo.get(id)
+    |> case do
+      nil -> {:error, :not_found}
+      product -> product |> Product.changeset(attrs) |> Repo.update()
+    end
+  end
 end
   
