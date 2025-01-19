@@ -1,12 +1,20 @@
 <main class="container mx-auto">
   <h1 class="text-2xl font-bold mb-4">Products</h1>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <%= for product <- @products do %>
       <.product_card 
         product={product} 
         editing={@editing}
       />
     <% end %>
-  </div>
+  </section>
+
+  <button class="fixed bottom-8 right-8 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-colors duration-200">
+    <a href="/new">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+      </svg>
+    </a>
+  </button>
 </main>

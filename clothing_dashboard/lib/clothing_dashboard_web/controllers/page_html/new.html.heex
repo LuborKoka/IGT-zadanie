@@ -1,0 +1,42 @@
+<main>
+    <h1>Add a new product</h1>
+    <.form for={%{}} action={~p"/products"} method="post">
+        <input placeholder="Title" name="title" required />
+        <input type="number" min="1" placeholder="Stock" name="stock" required />
+        <input placeholder="Price" name="price" required />
+        <textarea placeholder="Description" name="description" required />
+
+        <div class="relative">
+            <select name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" id="category-select" onchange="handleCategoryChange(this)">
+                <option value="" disabled selected>Select a category</option>
+                <%= for category <- @categories do %>
+                    <option value={category}><%= category %></option>
+                <% end %>
+                <option value="custom">Other (specify)</option>
+            </select>
+
+            <input type="text" id="custom-category" name="category" placeholder="Enter custom category" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2">
+        </div>
+
+
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Submit</button>
+    </.form>
+</main>
+
+<script>
+function handleCategoryChange(selectElement) {
+    const customInput = document.getElementById('custom-category')
+    if (selectElement.value === 'custom') {
+        customInput.classList.remove('hidden')
+        customInput.required = true
+        customInput.name = "category"
+        selectElement.name = ""
+    } else {
+        customInput.classList.add('hidden')
+        customInput.required = false
+        customInput.value = ''
+        customInput.name = ""
+        selectElement.name = "category"
+    }
+}
+</script>
