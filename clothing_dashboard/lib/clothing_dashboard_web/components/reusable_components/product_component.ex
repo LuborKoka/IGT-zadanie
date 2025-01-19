@@ -9,7 +9,6 @@ defmodule ClothingDashboardWeb.ProductComponent do
 
     ~H"""
     <div class="border rounded-lg p-4 shadow relative" id={"product-#{@product.id}"}>
-    <!--bolo tam @on_delete-->
       <button 
         phx-click={"delete_product"}
         phx-value-id={@product.id}
@@ -26,6 +25,8 @@ defmodule ClothingDashboardWeb.ProductComponent do
       </button>
       <h2 class="text-xl font-semibold"><%= @product.title %></h2>
       <p class="text-gray-600"><%= @product.description %></p>
+
+      <img src={@product.photo} alt="product_image" />
       
        <p class="text-lg font-bold mt-2">
        <%= if @editing[{@product.id, "price"}] do %>
@@ -97,6 +98,9 @@ defmodule ClothingDashboardWeb.ProductComponent do
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
           </svg>
         <% end %>
+        <p class="text-lg font-bold mt-2">
+          Category: <%= @product.category %>
+        </p>
       </p>
     </div>
     """
