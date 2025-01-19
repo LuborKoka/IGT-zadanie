@@ -18,6 +18,10 @@ defmodule ClothingDashboardWeb.Router do
     pipe_through :browser
 
     live "/", DashboardLive
+
+    get "/new", PageController, :new
+
+    post "/products", ProductController, :create
   end
 
   # Other scopes may use custom stacks.

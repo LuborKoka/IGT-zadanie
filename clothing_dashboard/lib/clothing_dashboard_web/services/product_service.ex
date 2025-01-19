@@ -1,66 +1,45 @@
 defmodule ClothingDashboard.ProductService do
     alias ClothingDashboard.Repo
     alias ClothingDashboard.Product
+    import Ecto.Query
   
-    @doc """
-    Fetches all products from the database.
-  
-    ## Examples
-  
-        iex> ClothingDashboard.ProductService.get_all_products()
-        [%Product{}, %Product{}]
-    """
     def get_all_products do
-      Repo.all(Product)
+        Repo.all(Product)
     end
   
-    @doc """
-    Fetches a product by its ID from the database.
-  
-    ## Parameters
-    - id: The ID of the product to fetch.
-  
-    ## Examples
-  
-        iex> ClothingDashboard.ProductService.get_product_by_id(1)
-        %Product{}
-  
-        iex> ClothingDashboard.ProductService.get_product_by_id(999)
-        nil
-    """
+
     def get_product_by_id(id) do
-      Repo.get(Product, id)
+        Repo.get(Product, id)
     end
 
-    @doc """
-  Deletes a product from the database.
-  """
-  def delete_product(id) do
-    Product
-    |> Repo.get(id)
-    |> case do
-      nil -> {:error, :not_found}
-      product -> Repo.delete(product)
+    def create_product(attrs) do
+        %Product{}
+        |> Product.changeset(attrs)
+        |> Repo.insert()
     end
-  end
 
-  @doc """
-  Updates a product's cost or stock.
-  
-  ## Examples
-      iex> update_product(1, %{cost: 29.99})
-      {:ok, %Product{}}
-      
-      iex> update_product(1, %{stock: 100})
-      {:ok, %Product{}}
-  """
-  def update_product(id, attrs) do
-    Product
-    |> Repo.get(id)
-    |> case do
-      nil -> {:error, :not_found}
-      product -> product |> Product.changeset(attrs) |> Repo.update()
+
+    def delete_product(id) do
+        Product
+        |> Repo.get(id)
+        |> case do
+        nil -> {:error, :not_found}
+        product -> Repo.delete(product)
+        end
     end
-  end
+
+    def update_product(id, attrs) do
+        Product
+        |> Repo.get(id)
+        |> case do
+        nil -> {:error, :not_found}
+        product -> product |> Product.changeset(attrs) |> Repo.update()
+        end
+    end
+
+
+    def get_distinct_categories do
+        Repo.all(from p in Product, distinct: true, select: p.category)
+      end
 end
   
