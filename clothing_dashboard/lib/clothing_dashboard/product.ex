@@ -18,5 +18,6 @@ defmodule ClothingDashboard.Product do
     product
     |> cast(attrs, [:photo, :title, :description, :category, :price, :stock])
     |> validate_required([:photo, :title, :description, :category, :price, :stock])
+    |> unique_constraint(:title)
   end
 end
