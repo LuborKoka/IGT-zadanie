@@ -59,23 +59,3 @@
     window.location.href = url
   }
 </script>
-
-
-<script>
-  let selectedCategories = new Set()
-
-  function toggleClasses(element, category) {
-    element.classList.toggle('text-blue-500')
-    element.classList.toggle('bg-blue-500')
-    element.classList.toggle('text-white')
-    element.classList.toggle('border-blue-500')
-    
-    if (selectedCategories.has(category)) {
-      selectedCategories.delete(category)
-    } else {
-      selectedCategories.add(category)
-    }
-
-    this.pushEvent("filter-categories", { categories: Array.from(selectedCategories) })
-  }
-</script>

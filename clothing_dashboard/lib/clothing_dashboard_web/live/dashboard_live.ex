@@ -17,8 +17,6 @@ defmodule ClothingDashboardWeb.DashboardLive do
           ProductService.get_products_by_categories(categories)
       end
 
-      IO.inspect(selected_categories, label: "selected cat")
-
       socket = socket
         |> assign(:products, products)
         |> assign(:categories, ProductService.get_distinct_categories())
