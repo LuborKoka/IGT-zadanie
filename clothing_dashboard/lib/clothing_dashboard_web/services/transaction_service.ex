@@ -47,8 +47,8 @@ defmodule ClothingDashboard.TransactionService do
         query =
             from t in Transaction,
                 group_by: [t.product_id, t.item_name],
-                select: {count(t.product_id), t.product_id, sum(t.item_count), sum(t.total_cost), t.item_name},
-                order_by: [desc: count(t.product_id)],
+                select: {count(t.item_name), t.product_id, sum(t.item_count), sum(t.total_cost), t.item_name},
+                order_by: [desc: count(t.item_name), desc: sum(t.item_count)],
                 limit: 1
 
         { transaction_count, product_id, sold_item_count, total_cost, item_name } = Repo.one(query)
