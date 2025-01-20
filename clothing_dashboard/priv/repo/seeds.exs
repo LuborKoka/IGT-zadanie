@@ -48,9 +48,17 @@ defmodule Seeder do
             item_name: product.title,
             item_count: count,
             total_cost: product.price * count,
-            product_id: product.id
+            product_id: product.id,
+            inserted_at: random_date_in_last_months(),
         })
     end
+
+    defp random_date_in_last_months() do
+        days_to_subtract = :rand.uniform(120) # random date medzi dneskom a 4 mesiacmi dozadu
+        date = DateTime.utc_now()
+        date = DateTime.add(date, -days_to_subtract * 24 * 60 * 60, :second)
+        DateTime.truncate(date, :second)
+      end
 
 end
 
