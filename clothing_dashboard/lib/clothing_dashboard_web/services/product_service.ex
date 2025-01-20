@@ -11,8 +11,8 @@ defmodule ClothingDashboard.ProductService do
     def get_product_by_id(nil), do: nil
     def get_product_by_id(id), do: Repo.get(Product, id)
 
-    def get_products_by_category(category) do
-        from(p in Product, where: p.category == ^category)
+    def get_products_by_categories(categories) do
+        from(p in Product, where: p.category in ^categories)
         |> Repo.all()
     end
 

@@ -4,16 +4,27 @@ defmodule ClothingDashboardWeb.DashboardLive do
     import ClothingDashboardWeb.ProductComponent
   
     def mount(params, _session, socket) do
-        products = case params["category"] do
-            nil -> ProductService.get_all_products()
-            category -> ProductService.get_products_by_category(category)
-        end
+      selected_categories = case params["categories"] do
+        nil -> nil
+        categories when is_list(categories) -> 
+          Enum.map(categories, &String.capitalize/1)
+      end
 
-        socket = socket
-          |> assign(:products, products)
-          |> assign(:categories, ProductService.get_distinct_categories())
-          |> assign(:editing, %{})
-        {:ok, socket, layout: false}
+      products = case selected_categories do
+        nil -> 
+          ProductService.get_all_products()
+        categories when is_list(categories) -> 
+          ProductService.get_products_by_categories(categories)
+      end
+
+      IO.inspect(selected_categories, label: "selected cat")
+
+      socket = socket
+        |> assign(:products, products)
+        |> assign(:categories, ProductService.get_distinct_categories())
+        |> assign(:selected_categories, selected_categories)
+        |> assign(:editing, %{})
+      {:ok, socket, layout: false}
     end
 
     def handle_event("toggle_edit", %{"field" => field, "id" => id}, socket) do
