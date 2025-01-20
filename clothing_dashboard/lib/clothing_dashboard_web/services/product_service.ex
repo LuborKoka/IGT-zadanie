@@ -25,6 +25,7 @@ defmodule ClothingDashboard.ProductService do
 
 
     def delete_product(id) do
+        # TODO: vymazat este obrazok realne zo zariadenia
         Product
         |> Repo.get(id)
         |> case do
@@ -34,7 +35,6 @@ defmodule ClothingDashboard.ProductService do
     end
 
     def update_product(id, attrs) do
-        # TODO: vymazat este obrazok realne zo zariadenia
         Product
         |> Repo.get(id)
         |> case do
