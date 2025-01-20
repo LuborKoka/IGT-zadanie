@@ -1,6 +1,5 @@
 defmodule ClothingDashboardWeb.ProductComponent do
   use Phoenix.Component
-  import Phoenix.LiveView
 
   attr :product, :map, required: true
   attr :editing, :map, required: true
@@ -29,8 +28,8 @@ defmodule ClothingDashboardWeb.ProductComponent do
       <img src={@product.photo} alt="product_image" />
       
        <p class="text-lg font-bold mt-2">
-       <%= if @editing[{@product.id, "price"}] do %>
-        <form phx-submit="update_product">
+        <%= if @editing[{@product.id, "price"}] do %>
+          <form phx-submit="update_product">
             <input 
               autofocus
               type="text" 
