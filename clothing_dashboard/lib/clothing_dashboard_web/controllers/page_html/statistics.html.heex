@@ -1,7 +1,35 @@
 <main class="p-8">
     <section class="block">
-        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">total stock available</div>
-        Total stock available: <%= @total_stock %> products
+        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">
+            total stock available
+        </div>
+
+        <table class="mt-4 w-full">
+            <tr>
+                <th class="uppercase text-left px-4 py-2 bg-green-200">id</th>
+                <th class="uppercase text-left px-4 py-2 bg-green-200">title</th>
+                <th class="uppercase text-right px-4 py-2 bg-green-200">cost per item</th>
+                <th class="uppercase text-right px-4 py-2 bg-green-200">pieces available</th>
+                <th class="uppercase text-right px-4 py-2 bg-green-200">potential income</th>
+            </tr>
+
+            <%= for product <- @stock.products do %>
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4"><%= product.id %></td>
+                    <td class="px-5 capitalize"><%= product.title %></td>
+                    <td class="px-5 text-right"><%= product.price %>€</td>
+                    <td class="px-5 text-right"><%= product.stock %></td>
+                    <td class="px-5 text-right"><%= product.income %>€</td>
+                </tr>
+            <% end %>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="capitalize text-right px-5 bg-green-100 border-r border-white">total available stock: <strong><%= @stock.total.stock %></strong></td>
+                <td class="capitalize text-right px-5 bg-green-100">total potential income: <strong><%= @stock.total.potential_income %>€</strong></td>
+            </tr>
+        </table>
     </section>
 
     <section class="block">

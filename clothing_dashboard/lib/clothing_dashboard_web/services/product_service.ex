@@ -35,6 +35,7 @@ defmodule ClothingDashboard.ProductService do
     end
 
     def update_product(id, attrs) do
+        # TODO: vymazat este obrazok realne zo zariadenia
         Product
         |> Repo.get(id)
         |> case do
@@ -50,8 +51,23 @@ defmodule ClothingDashboard.ProductService do
 
 
     def get_total_stock do
-        query = from p in Product, select: sum(p.stock)
-        Repo.one(query)
+        products = get_all_products()
+        products_with_income = products
+            |> Enum.map(fn product -> 
+                Map.put(product, :income, Decimal.mult(product.price, Decimal.new(product.stock)))
+            end)
+    
+
+        query = from p in "products",
+            select: %{
+                potential_income: sum(fragment("? * ?", p.price, p.stock)),
+                stock: sum(p.stock)
+            }
+
+        %{
+            total: Repo.one(query),
+            products: products_with_income
+        }
     end
 end
   
