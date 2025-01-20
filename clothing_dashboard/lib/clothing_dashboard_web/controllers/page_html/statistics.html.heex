@@ -1,8 +1,8 @@
 <main class="p-8">
     <section class="block">
-        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">
+        <h1 class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">
             total stock available
-        </div>
+        </h1>
 
         <table class="mt-4 w-full">
             <tr>
@@ -33,20 +33,52 @@
     </section>
 
     <section class="block">
-        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
+        <h1 class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
             best selling product
-        </div>
+        </h1>
 
-        Best selling product: <%= @bestseller.title %>
-        Pieces sold: <%= @bestseller.count %>
-        Total earning from this product: <%= @bestseller.cost %>
+        <div class="flex justify-around">
+            <table class="border shadow">
+                <tr class="border-b">
+                    <th class="capitalize text-right bg-green-300 py-2 px-4">Title</th>
+                    <td class="pl-8 pr-4 py-2 text-right capitalize"><%= @bestseller.title %></td>
+                </tr>
+                <tr class="border-b">
+                    <th class="capitalize text-right bg-green-300 py-2 px-4">total transactions made</th>
+                    <td class="pl-8 pr-4 py-2 text-right"><%= @bestseller.transaction_count %></td>
+                </tr>
+                <tr class="border-b">
+                    <th class="capitalize text-right bg-green-300 py-2 px-4">total items sold</th>
+                    <td class="pl-8 pr-4 py-2 text-right"><%= @bestseller.sold_item_count %></td>
+                </tr>
+                <tr class="border-b">
+                    <th class="capitalize text-right bg-green-300 py-2 px-4">total earnings</th>
+                    <td class="pl-8 pr-4 py-2 text-right"><%= @bestseller.total_cost %>€</td>
+                </tr>
+            </table>
+
+            <%= if is_nil(@bestseller.product) do %>
+                <div class="flex items-center justify-center flex-col">
+                    <svg class="w-24 h-24 text-red-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="capitalize text-2xl">not on sale anymore</span>
+                </div>
+            <% else %>
+                <img src={@bestseller.product.photo} alt="Product image">
+            <% end %>
+            
+            <!--right here, if @bestseller.product is nil, render and empty div for now, else render and image
+            where src = @bestseller.product.photo-->
+
+        </div>
     </section>
 
 
     <section class="block">
-        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
+        <h1 class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
             all transactions
-        </div>
+        </h1>
 
         <div class="grid">
             <aside class="justify-self-end flex items-center">

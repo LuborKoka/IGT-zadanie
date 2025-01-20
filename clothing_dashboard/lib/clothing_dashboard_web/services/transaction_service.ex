@@ -51,15 +51,18 @@ defmodule ClothingDashboard.TransactionService do
                 order_by: [desc: count(t.product_id)],
                 limit: 1
 
-        { count, product_id, item_count, cost, item_name } = Repo.one(query)
+        { transaction_count, product_id, sold_item_count, total_cost, item_name } = Repo.one(query)
 
         # neni som si este uplne isty, na co mi ta referencia je, ale raz sa mozno este zide
-        # product = ProductService.get_product_by_id(product_id)
+        # ale zide sa 😁
+        product = ProductService.get_product_by_id(product_id)
 
         %{
             title: item_name,
-            count: item_count,
-            cost: cost
+            sold_item_count: sold_item_count,
+            total_cost: total_cost,
+            transaction_count: transaction_count,
+            product: product
         }
     end
     
