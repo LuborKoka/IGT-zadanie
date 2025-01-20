@@ -1,10 +1,10 @@
 <main class="contain p-8">
-  <section class="mb-4 border-b-2 py-4 sticky top-0 z-50 bg-white w-[calc(100%+4px)] -translate-x-0.5">
+  <section class="mb-4 border-b-2 py-4 sticky top-0 z-10 bg-white w-[calc(100%+4px)] -translate-x-0.5">
     <b>Filter:</b>
 
     <%= for cat <- @categories do %>
       <span onclick={"applyFilter('#{cat}')"} class={[
-        "ml-4 cursor-pointer border rounded px-2 py-1 transition duration-200",
+        "inline-block ml-4 max-md:mt-2 cursor-pointer border rounded px-2 py-1 transition duration-200",
         if @selected_categories != nil && cat in @selected_categories do
           "bg-blue-500 text-white border-blue-500"
         else
@@ -14,7 +14,7 @@
         <%= cat %>
       </span>
     <% end %>
-    <a href="/" class="ml-4 text-red-600 border rounded px-2 py-1 transition duration-200 hover:border-red-600 hover:bg-red-600 hover:text-white">Clear filter</a>
+    <a href="/" class="inline-block ml-4 max-md:mt-2 text-red-600 border rounded px-2 py-1 transition duration-200 hover:border-red-600 hover:bg-red-600 hover:text-white">Clear filter</a>
   </section>
   
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

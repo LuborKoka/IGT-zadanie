@@ -1,35 +1,37 @@
-<main class="p-8">
+<main class="p-8 max-md:pt-16">
     <section class="block">
         <h1 class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">
             total stock available
         </h1>
 
-        <table class="mt-4 w-full">
-            <tr>
-                <th class="uppercase text-left px-4 py-2 bg-green-200">id</th>
-                <th class="uppercase text-left px-4 py-2 bg-green-200">title</th>
-                <th class="uppercase text-right px-4 py-2 bg-green-200">cost per item</th>
-                <th class="uppercase text-right px-4 py-2 bg-green-200">pieces available</th>
-                <th class="uppercase text-right px-4 py-2 bg-green-200">potential income</th>
-            </tr>
-
-            <%= for product <- @stock.products do %>
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4"><%= product.id %></td>
-                    <td class="px-5 capitalize"><%= product.title %></td>
-                    <td class="px-5 text-right"><%= product.price %>€</td>
-                    <td class="px-5 text-right"><%= product.stock %></td>
-                    <td class="px-5 text-right"><%= product.income %>€</td>
+        <div class="overflow-x-auto w-full inline-block">
+            <table class="mt-4 w-full">
+                <tr>
+                    <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">id</th>
+                    <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">title</th>
+                    <th class="uppercase text-right max-md:px-1 px-4 py-2 bg-green-200 whitespace-nowrap">cost per item</th>
+                    <th class="uppercase text-right px-4 py-2 bg-green-200 whitespace-nowrap">pieces available</th>
+                    <th class="uppercase text-right px-4 py-2 bg-green-200 whitespace-nowrap">potential income</th>
                 </tr>
-            <% end %>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="capitalize text-right px-5 bg-green-100 border-r border-white">total available stock: <strong><%= @stock.total.stock %></strong></td>
-                <td class="capitalize text-right px-5 bg-green-100">total potential income: <strong><%= @stock.total.potential_income %>€</strong></td>
-            </tr>
-        </table>
+
+                <%= for product <- @stock.products do %>
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="max-md:px-1 px-4"><%= product.id %></td>
+                        <td class="max-md:px-1 px-5 capitalize"><%= product.title %></td>
+                        <td class="max-md:px-1 px-5 text-right"><%= product.price %>€</td>
+                        <td class="px-5 text-right"><%= product.stock %></td>
+                        <td class="px-5 text-right"><%= product.income %>€</td>
+                    </tr>
+                <% end %>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="capitalize text-right whitespace-nowrap px-5 bg-green-100 border-r border-white">total available stock: <strong><%= @stock.total.stock %></strong></td>
+                    <td class="capitalize text-right whitespace-nowrap px-5 bg-green-100">total potential income: <strong><%= @stock.total.potential_income %>€</strong></td>
+                </tr>
+            </table>
+        </div>
     </section>
 
     <section class="block">
@@ -37,7 +39,7 @@
             best selling product
         </h1>
 
-        <div class="flex justify-around">
+        <div class="flex justify-around max-md:flex-col gap-8">
             <table class="border shadow">
                 <tr class="border-b">
                     <th class="capitalize text-right bg-green-300 py-2 px-4">Title</th>
@@ -97,34 +99,36 @@
                     </select>
                 </.form>
             </aside>
-            <table class="mt-4">
-                <tr>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200"></th>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200">id</th>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200">item name</th>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200">items sold</th>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200">total cost</th>
-                    <th class="uppercase text-left px-4 py-2 bg-green-200">date</th>
-                </tr>
-
-                <%= for {ta, index} <- Enum.with_index(@transactions, 1) do %>
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="px-4"><%= index %>.</td>
-                        <td class="px-4"><%= ta.id %></td>
-                        <td class="px-4 capitalize"><%= ta.item_name %></td>
-                        <td class="px-4"><%= ta.item_count %></td>
-                        <td class="px-4"><%= :erlang.float_to_binary(ta.total_cost, decimals: 2) %>€</td>
-                        <td class="px-4"><%= Calendar.strftime(ta.inserted_at, "%B %d, %Y") %></td>
+            <div class="overflow-x-auto w-full nline-block">
+                <table class="mt-4">
+                    <tr>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200"></th>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">id</th>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">item name</th>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">items sold</th>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">total cost</th>
+                        <th class="uppercase text-left max-md:px-1 px-4 py-2 bg-green-200">date</th>
                     </tr>
-                <% end %>
-            </table>
+
+                    <%= for {ta, index} <- Enum.with_index(@transactions, 1) do %>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="max-md:px-1 px-4"><%= index %>.</td>
+                            <td class="max-md:px-1 px-4"><%= ta.id %></td>
+                            <td class="max-md:px-1 px-4 capitalize"><%= ta.item_name %></td>
+                            <td class="max-md:px-1 px-4"><%= ta.item_count %></td>
+                            <td class="max-md:px-1 px-4"><%= :erlang.float_to_binary(ta.total_cost, decimals: 2) %>€</td>
+                            <td class="max-md:px-1 px-4"><%= Calendar.strftime(ta.inserted_at, "%B %d, %Y") %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
         </div>
     </section>
 </main>
 
 
 <script>
-    function filterTransactions() {
-
-    }
+    document.querySelectorAll('table').forEach(elem => { //prevent navbar opening on table scroll
+        elem.addEventListener('touchend', e => e.stopPropagation())
+    })
 </script>

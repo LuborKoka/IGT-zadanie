@@ -11,9 +11,15 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white grid grid-cols-[auto,1fr] w-full">
-    <div class="h-screen relative sticky top-0 border-r border-gray-200 shadow">
+  <body class="bg-white md:grid md:grid-cols-[auto,1fr] w-full">
+    <div id="navbar-container" class="fixed right-0 transition-transform duration-500 translate-x-full md:translate-x-0 md:relative md:sticky md:right-auto h-screen top-0 border-r border-gray-200 z-50 bg-white shadow">
+      <div id="close-navbar-mobile" onclick="toggleNavbarOpen()" class="md:hidden w-screen h-screen absolute bg-gray-100 left-0 top-0 bg-black opacity-10"></div>
       <nav class="px-8 py-4">
+        <button onclick="toggleNavbarOpen()" class="md:hidden absolute -left-12 border-2 border-black bg-white rounded p-2">
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+        </button>
         <ul>
           <li class="text-lg border shadow rounded mb-2 hover:bg-blue-500 transition duration-200"><a class="py-2 px-4 block" href="/">Dashboard</a></li>
           <li class="text-lg border shadow rounded mb-2 hover:bg-blue-500 transition duration-200"><a class="py-2 px-4 block" href="/statistics">Statistics</a></li>
@@ -21,5 +27,45 @@
       </nav>
     </div>
     {@inner_content}
+
+    <script>
+      function toggleNavbarOpen() {
+        const container = document.getElementById('navbar-container')
+        const div = document.getElementById('close-navbar-mobile')
+        container.classList.toggle('translate-x-full')
+        div.classList.toggle('-translate-x-full')
+        //mozno by tu bolo fajn dat este niekde display none, nech sa na to neda pretabovat, ale cba atm
+      }
+
+      let touchStartX = 0
+      let touchEndX = 0
+      
+      document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX
+      })
+
+      document.getElementById('navbar-container').addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX
+        handleSwipe(toRight = true)
+      })
+
+      document.querySelector('#navbar-container + *').addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX
+        handleSwipe(toRight = false)
+      })
+
+      function handleSwipe(toRight) {
+        const swipeThreshold = toRight ? 30 : -30
+        const swipeDistance = touchEndX - touchStartX
+        
+        if (toRight && swipeDistance > swipeThreshold) {
+          toggleNavbarOpen()
+        }
+
+        if (!toRight && swipeDistance < swipeThreshold) {
+          toggleNavbarOpen()
+        }
+      }
+    </script>
   </body>
 </html>
