@@ -14,7 +14,7 @@ defmodule ClothingDashboardWeb.PageController do
 
   def statistics(conn, _params) do
     total_stock = ProductService.get_total_stock()
-    bestseller = TransactionService.get_bestseller()
+    bestseller = TransactionService.get_bestseller_statistics()
     render(conn, :statistics, layout: false, total_stock: total_stock, bestseller: bestseller)
   end
 

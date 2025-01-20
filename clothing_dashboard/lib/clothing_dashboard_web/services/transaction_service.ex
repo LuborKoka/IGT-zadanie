@@ -1,19 +1,41 @@
 defmodule ClothingDashboard.TransactionService do
-    alias ClothingDashboard.{Transaction, Product, Repo, ProductService}
+    alias ClothingDashboard.{Transaction, Repo, ProductService}
     import Ecto.Query
 
     def get_bestseller() do
         query =
             from t in Transaction,
-                group_by: t.product_id,
-                select: {count(t.product_id), t.product_id, sum(t.item_count), sum(t.total_cost)},
+                group_by: [t.product_id, t.item_name],
+                select: {count(t.product_id), t.product_id},
                 order_by: [desc: count(t.product_id)],
                 limit: 1
 
-        {count, product_id, count, cost} = Repo.one(query)
+        { count, product_id } = Repo.one(query)
 
         ProductService.get_product_by_id(product_id)
     end
+
+    def get_bestseller_statistics() do
+        query =
+            from t in Transaction,
+                group_by: [t.product_id, t.item_name],
+                select: {count(t.product_id), t.product_id, sum(t.item_count), sum(t.total_cost), t.item_name},
+                order_by: [desc: count(t.product_id)],
+                limit: 1
+
+        { count, product_id, item_count, cost, item_name } = Repo.one(query)
+
+        # neni som si este uplne isty, na co mi ta referencia je, ale raz sa mozno este zide
+        # product = ProductService.get_product_by_id(product_id)
+
+        %{
+            title: item_name,
+            count: item_count,
+            cost: cost
+        }
+    end
+    
+
 
 
 end
