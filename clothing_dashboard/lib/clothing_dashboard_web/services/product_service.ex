@@ -8,9 +8,8 @@ defmodule ClothingDashboard.ProductService do
     end
   
 
-    def get_product_by_id(id) do
-        Repo.get(Product, id)
-    end
+    def get_product_by_id(nil), do: nil
+    def get_product_by_id(id), do: Repo.get(Product, id)
 
     def get_products_by_category(category) do
         from(p in Product, where: p.category == ^category)
