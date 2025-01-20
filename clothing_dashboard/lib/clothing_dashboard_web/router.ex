@@ -20,6 +20,7 @@ defmodule ClothingDashboardWeb.Router do
     live "/", DashboardLive
 
     get "/new", PageController, :new
+    get "/statistics", PageController, :statistics
 
     post "/products", ProductController, :create
   end

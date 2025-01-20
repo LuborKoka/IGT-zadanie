@@ -46,6 +46,12 @@ defmodule ClothingDashboard.ProductService do
 
     def get_distinct_categories do
         Repo.all(from p in Product, distinct: true, select: p.category)
-      end
+    end
+
+
+    def get_total_stock do
+        query = from p in Product, select: sum(p.stock)
+        Repo.one(query)
+    end
 end
   
