@@ -5,10 +5,6 @@
         <ClothingDashboard.LabeledInput.labeled_input name="Stock" id="stock" type="number" />
         <ClothingDashboard.LabeledInput.labeled_input name="Price" id="price" />
         <ClothingDashboard.LabeledInput.labeled_input name="Description" id="description" is_textarea />
-        <!--<input class="px-8 py-4 border rounded shadow outline-none" placeholder="Title" name="title" required />
-        <input class="px-8 py-4 border rounded shadow outline-none" type="number" min="1" placeholder="Stock" name="stock" required />
-        <input class="px-8 py-4 border rounded shadow outline-none" placeholder="Price" name="price" required />
-        <textarea placeholder="Description" name="description" required />-->
 
         <div class="relative">
             <select name="category" class=" w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg valid:shadow-lg" id="category-select" onchange="handleCategoryChange(this)">
@@ -19,20 +15,42 @@
                 <option value="custom">Other (specify)</option>
             </select>
             <ClothingDashboard.LabeledInput.labeled_input name="Category" id="category" wrapper_classes="hidden mt-4" />
-            <!--<input type="text" id="custom-category" name="category" placeholder="Enter custom category" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2">-->
         </div>
 
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
-            <input required type="file" name="photo" accept="image/*"class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
-        </div>
+        <div class="flex gap-4 justify-around mt-8">
+            <div class="mb-4 shadow-lg px-4 py-8 h-fit">
+                <label class="block text-2xl border-b-2 capitalize text-center font-bold text-gray-700 mb-2">upload product image</label>
+                <input id="img-input" class="my-12" required type="file" name="photo" accept="image/*"class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+            </div>
 
+            <div class="shadow-lg p-8 mb-4">
+                <p class="text-2xl border-b-2 capitalize text-center font-bold text-gray-700 mb-2">Image Preview</p>
+                <img src="/images/no_preview_available.png" width="300px" height="300px" alt="preview" id="img-preview" class="rounded shadow mt-2"/>
+            </div>
+        </div>
 
         <button type="submit" class="w-fit text-white justify-self-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-xl rounded-lg px-8 py-4 mt-4">Submit</button>
     </.form>
 </main>
 
 <script>
+document.getElementById('img-input')?.addEventListener('change', function(event) {
+  const file = event.target.files[0]
+  const preview = document.getElementById('img-preview')
+  
+  if (file) {
+    const reader = new FileReader()
+    
+    reader.onload = function(e) {
+      preview.src = e.target.result
+    }
+    
+    reader.readAsDataURL(file)
+  } else {
+    preview.src = ''
+  }
+})
+
 function handleCategoryChange(selectElement) {
     const input = document.getElementById('category')
     const parent = input.parentElement
