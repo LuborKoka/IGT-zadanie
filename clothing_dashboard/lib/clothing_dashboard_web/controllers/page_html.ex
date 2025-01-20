@@ -5,8 +5,6 @@ defmodule ClothingDashboardWeb.PageHTML do
   See the `page_html` directory for all templates available.
   """
   use ClothingDashboardWeb, :html
-  import ClothingDashboard.LabeledInput
-
 
   embed_templates "page_html/*"
 end
