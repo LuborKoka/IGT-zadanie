@@ -1,56 +1,51 @@
-<main>
-    <h1>Add a new product</h1>
-    <.form for={%{}} action={~p"/products"} method="post" multipart={true}>
-        <input placeholder="Title" name="title" required />
-        <input type="number" min="1" placeholder="Stock" name="stock" required />
-        <input placeholder="Price" name="price" required />
-        <textarea placeholder="Description" name="description" required />
+<main class="p-8">
+    <h1 class="w-full text-center py-8 text-2xl font-bold">Add a new product</h1>
+    <.form for={%{}} class="grid gap-4" action={~p"/products"} method="post" multipart={true}>
+        <ClothingDashboard.LabeledInput.labeled_input name="Title" id="title" />
+        <ClothingDashboard.LabeledInput.labeled_input name="Stock" id="stock" type="number" />
+        <ClothingDashboard.LabeledInput.labeled_input name="Price" id="price" />
+        <ClothingDashboard.LabeledInput.labeled_input name="Description" id="description" is_textarea />
+        <!--<input class="px-8 py-4 border rounded shadow outline-none" placeholder="Title" name="title" required />
+        <input class="px-8 py-4 border rounded shadow outline-none" type="number" min="1" placeholder="Stock" name="stock" required />
+        <input class="px-8 py-4 border rounded shadow outline-none" placeholder="Price" name="price" required />
+        <textarea placeholder="Description" name="description" required />-->
 
         <div class="relative">
-            <select name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" id="category-select" onchange="handleCategoryChange(this)">
+            <select name="category" class=" w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg valid:shadow-lg" id="category-select" onchange="handleCategoryChange(this)">
                 <option value="" disabled selected>Select a category</option>
                 <%= for category <- @categories do %>
                     <option value={category}><%= category %></option>
                 <% end %>
                 <option value="custom">Other (specify)</option>
             </select>
-
-            <input type="text" id="custom-category" name="category" placeholder="Enter custom category" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2">
+            <ClothingDashboard.LabeledInput.labeled_input name="Category" id="category" wrapper_classes="hidden mt-4" />
+            <!--<input type="text" id="custom-category" name="category" placeholder="Enter custom category" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2">-->
         </div>
 
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
-            <input 
-                type="file" 
-                name="photo" 
-                accept="image/*"
-                class="block w-full text-sm text-gray-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-md file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100"
-            />
+            <input required type="file" name="photo" accept="image/*"class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
         </div>
 
 
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Submit</button>
+        <button type="submit" class="w-fit text-white justify-self-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-xl rounded-lg px-8 py-4 mt-4">Submit</button>
     </.form>
 </main>
 
 <script>
 function handleCategoryChange(selectElement) {
-    const customInput = document.getElementById('custom-category')
+    const input = document.getElementById('category')
+    const parent = input.parentElement
     if (selectElement.value === 'custom') {
-        customInput.classList.remove('hidden')
-        customInput.required = true
-        customInput.name = "category"
+        parent.classList.remove('hidden')
+        input.required = true
+        input.name = "category"
         selectElement.name = ""
     } else {
-        customInput.classList.add('hidden')
-        customInput.required = false
-        customInput.value = ''
-        customInput.name = ""
+        parent.classList.add('hidden')
+        input.required = false
+        input.value = ''
+        input.name = ""
         selectElement.name = "category"
     }
 }

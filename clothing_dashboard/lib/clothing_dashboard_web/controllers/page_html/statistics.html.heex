@@ -1,9 +1,14 @@
-<main>
+<main class="p-8">
     <section class="block">
+        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl mb-8">total stock available</div>
         Total stock available: <%= @total_stock %> products
     </section>
 
     <section class="block">
+        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
+            best selling product
+        </div>
+
         Best selling product: <%= @bestseller.title %>
         Pieces sold: <%= @bestseller.count %>
         Total earning from this product: <%= @bestseller.cost %>
@@ -11,45 +16,49 @@
 
 
     <section class="block">
-        All transactions:
+        <div class="capitalize w-full text-white bg-green-400 border-8 border-green-500 rounder px-8 py-4 text-xl my-8">
+            all transactions
+        </div>
 
-        <table>
-            <tr>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200"></th>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200">id</th>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200">item name</th>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200">items sold</th>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200">total cost</th>
-                <th class="uppercase text-left px-4 py-2 bg-blue-200">date</th>
-            </tr>
-
-            <%= for {ta, index} <- Enum.with_index(@transactions, 1) do %>
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4"><%= index %>.</td>
-                    <td class="px-4"><%= ta.id %></td>
-                    <td class="px-4"><%= ta.item_name %></td>
-                    <td class="px-4"><%= ta.item_count %></td>
-                    <td class="px-4"><%= :erlang.float_to_binary(ta.total_cost, decimals: 2) %>€</td>
-                    <td class="px-4"><%= Calendar.strftime(ta.inserted_at, "%B %d, %Y") %></td>
+        <div class="grid">
+            <aside class="justify-self-end flex items-center">
+                Filter by month:
+                <.form class="ml-4" for={%{}} action={~p"/statistics"} method="get">
+                    <select class="rounded transition-shadow duration-200 hover:shadow" name="month" onchange="this.value ? this.form.submit() : window.location.href='/statistics'">
+                        <option value="">All</option>
+                        <%= for date <- @months do %>
+                            <option 
+                                value={"#{date.month},#{date.year}"} 
+                                selected={@selected_month == "#{date.month},#{date.year}"}
+                            >
+                                <%= date.month %> <%= date.year %>
+                            </option>
+                        <% end %>
+                    </select>
+                </.form>
+            </aside>
+            <table class="mt-4">
+                <tr>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200"></th>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200">id</th>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200">item name</th>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200">items sold</th>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200">total cost</th>
+                    <th class="uppercase text-left px-4 py-2 bg-green-200">date</th>
                 </tr>
-            <% end %>
-        </table>
 
-
-        Filter by month:
-        <.form  for={%{}} action={~p"/statistics"} method="get">
-            <select name="month" onchange="this.value ? this.form.submit() : window.location.href='/statistics'">
-                <option value="">All</option>
-                <%= for date <- @months do %>
-                    <option 
-                        value={"#{date.month},#{date.year}"} 
-                        selected={@selected_month == "#{date.month},#{date.year}"}
-                    >
-                        <%= date.month %> <%= date.year %>
-                    </option>
+                <%= for {ta, index} <- Enum.with_index(@transactions, 1) do %>
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-4"><%= index %>.</td>
+                        <td class="px-4"><%= ta.id %></td>
+                        <td class="px-4"><%= ta.item_name %></td>
+                        <td class="px-4"><%= ta.item_count %></td>
+                        <td class="px-4"><%= :erlang.float_to_binary(ta.total_cost, decimals: 2) %>€</td>
+                        <td class="px-4"><%= Calendar.strftime(ta.inserted_at, "%B %d, %Y") %></td>
+                    </tr>
                 <% end %>
-            </select>
-        </.form>
+            </table>
+        </div>
     </section>
 </main>
 

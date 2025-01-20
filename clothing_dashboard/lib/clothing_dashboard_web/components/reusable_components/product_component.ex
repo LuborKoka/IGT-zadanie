@@ -7,7 +7,7 @@ defmodule ClothingDashboardWeb.ProductComponent do
   def product_card(assigns) do
 
     ~H"""
-    <div class="border rounded-lg p-4 shadow relative" id={"product-#{@product.id}"}>
+    <div class="border rounded-lg p-4 shadow relative grid" id={"product-#{@product.id}"}>
       <button 
         phx-click={"delete_product"}
         phx-value-id={@product.id}
@@ -22,14 +22,14 @@ defmodule ClothingDashboardWeb.ProductComponent do
           <line x1="14" y1="11" x2="14" y2="17"></line>
         </svg>
       </button>
-      <h2 class="text-xl font-semibold"><%= @product.title %></h2>
-      <p class="text-gray-600"><%= @product.description %></p>
+      <b class="text-xl capitalize text-center"><%= @product.title %></b>
+      <p class="text-gray-600 text-justify"><%= @product.description %></p>
 
-      <img src={@product.photo} alt="product_image" />
+      <img src={@product.photo} class="rounded justify-self-center my-2" alt="product_image" />
       
-       <p class="text-lg font-bold mt-2">
+      <p class="text-lg mt-2">
         <%= if @editing[{@product.id, "price"}] do %>
-          <form phx-submit="update_product">
+          <form class="flex items-center gap-2" phx-submit="update_product">
             <input 
               autofocus
               type="text" 
@@ -42,10 +42,9 @@ defmodule ClothingDashboardWeb.ProductComponent do
             />
             <input type="hidden" name="id" value={@product.id} />
             <input type="hidden" name="field" value="price" />
-            <button>submit</button>
           </form>
         <% else %>
-          Cost: <%= @product.price %>€
+          Cost: <b><%= @product.price %>€</b>
           <svg 
             class="w-6 h-6 text-gray-800 dark:text-white inline cursor-pointer" 
             aria-hidden="true" 
@@ -63,7 +62,7 @@ defmodule ClothingDashboardWeb.ProductComponent do
         <% end %>
       </p>
         
-      <p class="text-lg font-bold mt-2">
+      <p class="text-lg mt-2">
         <%= if @editing[{@product.id, "stock"}] do %>
           <form phx-submit="update_product">
             <input 
@@ -78,10 +77,9 @@ defmodule ClothingDashboardWeb.ProductComponent do
             />
             <input type="hidden" name="id" value={@product.id} />
             <input type="hidden" name="field" value="stock" />
-            <button>submit</button>
           </form>
         <% else %>
-          Stock: <%= @product.stock %> pcs
+          Stock: <b><%= @product.stock %> pcs</b>
           <svg 
             class="w-6 h-6 text-gray-800 dark:text-white inline cursor-pointer" 
             aria-hidden="true" 
@@ -97,8 +95,8 @@ defmodule ClothingDashboardWeb.ProductComponent do
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
           </svg>
         <% end %>
-        <p class="text-lg font-bold mt-2">
-          Category: <%= @product.category %>
+        <p class="text-lg mt-2">
+          Category: <b><%= @product.category %></b>
         </p>
       </p>
     </div>

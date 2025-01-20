@@ -11,13 +11,15 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white flex w-full">
-    <nav class="px-1 py-2">
-      <ul>
-        <li><a href="/">Dashboard</a></li>
-        <li><a href="/statistics">Statistics</a></li>
-      </ul>
-    </nav>
+  <body class="bg-white grid grid-cols-[auto,1fr] w-full">
+    <div class="h-screen relative sticky top-0 border-r border-gray-200 shadow">
+      <nav class="px-8 py-4">
+        <ul>
+          <li class="text-lg border shadow rounded mb-2 hover:bg-blue-500 transition duration-200"><a class="py-2 px-4 block" href="/">Dashboard</a></li>
+          <li class="text-lg border shadow rounded mb-2 hover:bg-blue-500 transition duration-200"><a class="py-2 px-4 block" href="/statistics">Statistics</a></li>
+        </ul>
+      </nav>
+    </div>
     {@inner_content}
   </body>
 </html>
