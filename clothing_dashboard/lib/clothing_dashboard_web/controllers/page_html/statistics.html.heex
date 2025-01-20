@@ -111,7 +111,7 @@
                     <tr class="border-b hover:bg-gray-50">
                         <td class="px-4"><%= index %>.</td>
                         <td class="px-4"><%= ta.id %></td>
-                        <td class="px-4"><%= ta.item_name %></td>
+                        <td class="px-4 capitalize"><%= ta.item_name %></td>
                         <td class="px-4"><%= ta.item_count %></td>
                         <td class="px-4"><%= :erlang.float_to_binary(ta.total_cost, decimals: 2) %>€</td>
                         <td class="px-4"><%= Calendar.strftime(ta.inserted_at, "%B %d, %Y") %></td>
