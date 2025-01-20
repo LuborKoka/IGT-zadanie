@@ -11,3 +11,4 @@ erl_crash.dump
 *.env
 node_modules/
 *product_images/
+*.DS_Store
