@@ -15,11 +15,6 @@ defmodule ClothingDashboardWeb.DashboardLive do
           |> assign(:editing, %{})
         {:ok, socket, layout: false}
     end
-    
-
-    def handle_event("toggle_category", %{"category" => category}, socket) do
-        {:noreply, push_navigate(socket, to: ~p"/?category=#{category}")}
-    end
 
     def handle_event("toggle_edit", %{"field" => field, "id" => id}, socket) do
         editing = Map.get(socket.assigns, :editing, %{})

@@ -5,13 +5,11 @@
     Filter:
 
     <%= for cat <- @categories do %>
-      <span 
-        phx-click="toggle_category" 
-        phx-value-category={cat}
+       <a href={"/?category=#{cat}"}
         class="ml-4 text-blue-600 cursor-pointer border-2 rounded px-2 py-1"
       >
         <%= cat %>
-      </span>
+      </a>
     <% end %>
     <a href="/" class="ml-4 text-red-600 border-2 rounded px-2 py-1">Clear filter</a>
   </section>
