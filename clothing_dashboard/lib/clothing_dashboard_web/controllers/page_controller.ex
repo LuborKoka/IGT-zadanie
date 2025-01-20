@@ -12,10 +12,31 @@ defmodule ClothingDashboardWeb.PageController do
     render(conn, :new, layout: false, categories: categories)
   end
 
-  def statistics(conn, _params) do
+  def statistics(conn, params) do
+    selected_month = params["month"]
+    [month, year] = case selected_month do
+      nil -> [nil, nil]
+      encoded_month -> 
+        decoded = URI.decode(encoded_month)
+        [month, year] = String.split(decoded, ",")
+        year = String.to_integer(year)
+        [month, year]
+    end
+
     total_stock = ProductService.get_total_stock()
     bestseller = TransactionService.get_bestseller_statistics()
-    render(conn, :statistics, layout: false, total_stock: total_stock, bestseller: bestseller)
+    transactions = TransactionService.get_transactions_by_month(month, year)
+    months = TransactionService.get_transactions_months()
+    render(
+      conn, 
+      :statistics, 
+      layout: false, 
+      total_stock: total_stock, 
+      bestseller: bestseller, 
+      transactions: transactions,
+      months: months,
+      selected_month: selected_month
+    )
   end
 
 end
