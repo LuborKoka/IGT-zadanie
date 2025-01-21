@@ -16,6 +16,9 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
+      },
+      width: {
+        'login-form': 'clamp(250px, 100%, 450px)'
       }
     },
   },

@@ -19,6 +19,9 @@ defmodule ClothingDashboardWeb.Router do
 
     live "/", DashboardLive
 
+    get "/auth", PageController, :auth
+    post "/auth", AuthService, :handle_auth_action
+
     get "/new", PageController, :new
     get "/statistics", PageController, :statistics
 

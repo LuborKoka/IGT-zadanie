@@ -12,6 +12,10 @@ defmodule ClothingDashboardWeb.PageController do
     render(conn, :new, layout: false, categories: categories)
   end
 
+  def auth(conn, _params) do 
+    render(conn, :auth, layout: false)
+  end
+
   def statistics(conn, params) do
     selected_month = params["month"]
     [month, year] = case selected_month do
