@@ -1,7 +1,8 @@
 import Config
 
 # Configure your database
-config :clothing_dashboard, ClothingDashboard.Repo,
+config :clothing_dashboard, ClothingDashboard.Repo, 
+  # ano, mal by som tu pouzit env premenne, ale nechcel som s tym stracat cas
   username: "postgres",
   password: "postgres",
   hostname: "localhost",

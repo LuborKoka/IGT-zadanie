@@ -9,6 +9,5 @@ erl_crash.dump
 /config/*.secret.exs
 .elixir_ls/
 *.env
-node_modules/
 *product_images/
 *.DS_Store
