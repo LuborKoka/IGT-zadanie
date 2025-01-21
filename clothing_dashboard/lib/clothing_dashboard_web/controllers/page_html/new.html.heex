@@ -1,5 +1,5 @@
 <main class="p-8">
-    <h1 class="w-full text-center py-8 text-2xl font-bold">Add a new product</h1>
+    <h1 class="w-full text-center py-8 text-2xl font-bold capitalize">Add a new product</h1>
     <.form for={%{}} class="grid gap-4" action={~p"/products"} method="post" multipart={true}>
         <ClothingDashboard.LabeledInput.labeled_input name="Title" id="title" />
         <ClothingDashboard.LabeledInput.labeled_input name="Stock" id="stock" type="number" />
