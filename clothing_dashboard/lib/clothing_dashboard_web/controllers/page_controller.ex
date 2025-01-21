@@ -31,7 +31,7 @@ defmodule ClothingDashboardWeb.PageController do
     end
 
     stock = ProductService.get_total_stock()
-    bestseller = TransactionService.get_bestseller_statistics()
+    bestseller = ProductService.get_bestseller_statistics()
     transactions = TransactionService.get_transactions_by_month(month, year)
     months = TransactionService.get_transactions_months()
     render(
