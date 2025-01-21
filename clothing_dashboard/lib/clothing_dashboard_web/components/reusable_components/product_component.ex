@@ -22,8 +22,10 @@ defmodule ClothingDashboardWeb.ProductComponent do
           <line x1="14" y1="11" x2="14" y2="17"></line>
         </svg>
       </button>
-      <b class="text-xl capitalize text-center"><%= @product.title %></b>
-      <p class="text-gray-600 text-justify"><%= @product.description %></p>
+      <div>
+        <b class="text-xl capitalize text-center block"><%= @product.title %></b>
+        <p class="text-gray-600 text-justify"><%= @product.description %></p>
+      </div>
 
       <div class="self-end">
         <img src={@product.photo} class="rounded justify-self-center my-2" alt="product_image" />
