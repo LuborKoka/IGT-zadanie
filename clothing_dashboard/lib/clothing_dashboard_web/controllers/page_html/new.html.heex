@@ -7,7 +7,7 @@
         <ClothingDashboard.LabeledInput.labeled_input name="Description" id="description" is_textarea placeholder="Description"/>
 
         <div class="relative">
-            <select name="category" class=" w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg valid:shadow-lg" id="category-select" onchange="handleCategoryChange(this)">
+            <select name="category" class=" w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg focus:border-green-500 focus:ring-green-500 valid:shadow-lg valid:border-green-500 valid:ring-green-500" id="category-select" required onchange="handleCategoryChange(this)">
                 <option value="" disabled selected>Select a category</option>
                 <%= for category <- @categories do %>
                     <option value={category}><%= category %></option>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <button type="submit" class="w-fit text-white justify-self-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-xl rounded-lg px-8 py-4 mt-4">Submit</button>
+        <button type="submit" class="w-fit text-white justify-self-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 text-xl rounded-lg px-8 py-4 mt-4">Submit</button>
     </.form>
 </main>
 
