@@ -1,10 +1,10 @@
 <main class="p-8">
     <h1 class="w-full text-center py-8 text-2xl font-bold capitalize">Add a new product</h1>
     <.form for={%{}} class="grid gap-4" action={~p"/products"} method="post" multipart={true}>
-        <ClothingDashboard.LabeledInput.labeled_input name="Title" id="title" />
-        <ClothingDashboard.LabeledInput.labeled_input name="Stock" id="stock" type="number" />
-        <ClothingDashboard.LabeledInput.labeled_input name="Price" id="price" />
-        <ClothingDashboard.LabeledInput.labeled_input name="Description" id="description" is_textarea />
+        <ClothingDashboard.LabeledInput.labeled_input name="Title" id="title" placeholder="Title"/>
+        <ClothingDashboard.LabeledInput.labeled_input name="Stock" id="stock" type="number" placeholder="Stock"/>
+        <ClothingDashboard.LabeledInput.labeled_input name="Price" id="price" placeholder="Price"/>
+        <ClothingDashboard.LabeledInput.labeled_input name="Description" id="description" is_textarea placeholder="Description"/>
 
         <div class="relative">
             <select name="category" class=" w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg valid:shadow-lg" id="category-select" onchange="handleCategoryChange(this)">
@@ -14,7 +14,7 @@
                 <% end %>
                 <option value="custom">Other (specify)</option>
             </select>
-            <ClothingDashboard.LabeledInput.labeled_input name="Category" id="category" wrapper_classes="hidden mt-4" />
+            <ClothingDashboard.LabeledInput.labeled_input name="Category" id="category" placeholder="Category" wrapper_classes="hidden mt-4" />
         </div>
 
 

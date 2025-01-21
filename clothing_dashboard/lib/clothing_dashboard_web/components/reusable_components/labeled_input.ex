@@ -3,6 +3,7 @@ defmodule ClothingDashboard.LabeledInput do
 
     attr :name, :string, required: true
     attr :id, :string, required: true
+    attr :placeholder, :string, required: true
     attr :type, :string, required: false, default: "text"
     attr :min, :string, required: false, default: "1"
     attr :is_textarea, :boolean, required: false, default: false
@@ -17,7 +18,7 @@ defmodule ClothingDashboard.LabeledInput do
                     <input id={@id} name={String.downcase(@name)} min={@min} type={@type} required class="peer w-full bg-transparent px-5 py-4 text-xl border rounded outline-none transition-shadow duration-300 hover:shadow-lg focus:shadow-lg valid:shadow-lg"/>
                 <% end %>
                 <label for={@id} class="absolute left-4 top-4 text-xl pointer-events-none bg-white transition-all duration-300 peer-focus:-translate-y-full peer-focus:text-base peer-valid:-translate-y-full peer-valid:text-base peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-xl">
-                    <%= @name %>
+                    <%= @placeholder %>
                 </label>
             </div>
         """
