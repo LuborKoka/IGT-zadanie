@@ -19,6 +19,7 @@ defmodule ClothingDashboardWeb.DashboardLive do
 
       socket = socket
         |> assign(:products, products)
+        |> assign(:bestseller, ProductService.get_bestseller())
         |> assign(:categories, ProductService.get_distinct_categories())
         |> assign(:selected_categories, selected_categories)
         |> assign(:editing, %{})

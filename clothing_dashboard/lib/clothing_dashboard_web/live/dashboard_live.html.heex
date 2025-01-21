@@ -19,7 +19,7 @@
   
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <%= for product <- @products do %>
-      <.product_card product={product} editing={@editing}/>
+      <.product_card product={product} editing={@editing} is_bestseller={product.id == @bestseller.id}/>
     <% end %>
   </section>
 
