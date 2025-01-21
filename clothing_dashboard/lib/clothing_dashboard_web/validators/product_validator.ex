@@ -41,7 +41,9 @@ defmodule ClothingDashboard.ProductValidator do
     end
     def validate_description(_), do: {:error, "Invalid description format"}
       
-    def validate_category(category) when is_binary(category) do
+    def validate_category(category) when is_binary(category) do 
+        # este by som mohol porovnat case insensitive s existujucimi kategoriami
+        # aby sa nestalo, ze napr Pants a pants a pAnTs budu 3 rozdielne kategorie
         case String.length(category) do
             len when len > 0 -> {:ok, category}
             _ -> {:error, "Category cannot be empty"}
