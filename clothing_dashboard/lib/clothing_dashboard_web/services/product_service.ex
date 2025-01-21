@@ -25,12 +25,18 @@ defmodule ClothingDashboard.ProductService do
 
 
     def delete_product(id) do
-        # TODO: vymazat este obrazok realne zo zariadenia
         Product
         |> Repo.get(id)
         |> case do
-        nil -> {:error, :not_found}
-        product -> Repo.delete(product)
+            nil -> 
+                {:error, :not_found}
+            product ->
+                image_path = "./priv/static/#{product.photo}"
+                File.rm(image_path)
+                |> case do
+                :ok -> Repo.delete(product)
+                {:error, reason} -> {:error, :file_delete_failed, reason}
+                end
         end
     end
 
