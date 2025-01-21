@@ -1,14 +1,10 @@
 defmodule ClothingDashboardWeb.DashboardLive do
     use ClothingDashboardWeb, :live_view
-    alias ClothingDashboard.ProductService
+    alias ClothingDashboard.{ProductService, QueryParamValidator}
     import ClothingDashboardWeb.ProductComponent
   
     def mount(params, _session, socket) do
-      selected_categories = case params["categories"] do
-        nil -> nil
-        categories when is_list(categories) -> 
-          Enum.map(categories, &String.capitalize/1)
-      end
+      selected_categories = QueryParamValidator.parse_categories_query_param(params)
 
       products = case selected_categories do
         nil -> 

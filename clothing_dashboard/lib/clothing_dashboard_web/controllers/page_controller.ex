@@ -1,6 +1,6 @@
 defmodule ClothingDashboardWeb.PageController do
   use ClothingDashboardWeb, :controller
-  alias ClothingDashboard.{ProductService, TransactionService}
+  alias ClothingDashboard.{ProductService, TransactionService, QueryParamValidator}
 
   def home(conn, _params) do
     products = ProductService.get_all_products()
@@ -18,21 +18,7 @@ defmodule ClothingDashboardWeb.PageController do
 
   def statistics(conn, params) do
     selected_month = params["month"]
-    [month, year] = case selected_month do
-      nil -> [nil, nil]
-      encoded_month -> 
-        decoded = URI.decode(encoded_month)
-        with(
-          [month, year] <- String.split(decoded, ",") |> validate_parts(),
-          true <- validate_month(month),
-          {:ok, year_str} <- validate_year(year),
-          {year_int, _} <- Integer.parse(year_str)
-        ) do
-          [String.capitalize(month), year_int]
-        else
-          _ -> [nil, nil]
-        end
-    end
+    [month, year] = QueryParamValidator.parse_month_year(selected_month)
 
     stock = ProductService.get_total_stock()
     bestseller = ProductService.get_bestseller_statistics()
@@ -48,25 +34,5 @@ defmodule ClothingDashboardWeb.PageController do
       months: months,
       selected_month: selected_month
     )
-  end
-
-  defp validate_parts(parts) when length(parts) == 2, do: parts
-  defp validate_parts(_), do: nil
-
-
-  defp validate_month(month) do
-    valid_months = [
-      "january", "february", "march", "april", "may", "june",
-      "july", "august", "september", "october", "november", "december"
-    ]
-    String.downcase(month) in valid_months
-  end
-
-
-  defp validate_year(year) do
-    case Integer.parse(year) do
-      {_year_int, ""} -> {:ok, year}
-      _ -> :error
-    end
   end
 end
